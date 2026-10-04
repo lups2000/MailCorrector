@@ -6,11 +6,62 @@
 	objectVersion = 110;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		8971EA7B30724D56002F03ED /* MailCorrectorExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8971EA7430724D56002F03ED /* MailCorrectorExtension.appex */; };
+		8971EA8E30724F0E002F03ED /* OpenAIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8971EA8530724DD7002F03ED /* OpenAIClient.swift */; };
+		8971EA8F30724F0E002F03ED /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8971EA8430724DC2002F03ED /* KeychainStore.swift */; };
+		8971EA9030724F0E002F03ED /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8971EA8430724DC2002F03ED /* KeychainStore.swift */; };
+		8971EA9130724F0E002F03ED /* OpenAIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8971EA8530724DD7002F03ED /* OpenAIClient.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8971EA7930724D56002F03ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8976D0EF3072425200995266 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8971EA7330724D56002F03ED;
+			remoteInfo = MailCorrectorExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8971EA7C30724D56002F03ED /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = PlugIns;
+			files = (
+				8971EA7B30724D56002F03ED /* MailCorrectorExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		8971EA7430724D56002F03ED /* MailCorrectorExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MailCorrectorExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8971EA8430724DC2002F03ED /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
+		8971EA8530724DD7002F03ED /* OpenAIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIClient.swift; sourceTree = "<group>"; };
 		8976D0F73072425200995266 /* MailCorrector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MailCorrector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8971EA7F30724D56002F03ED /* Exceptions for "MailCorrectorExtension" folder in "MailCorrectorExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8971EA7330724D56002F03ED /* MailCorrectorExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		8971EA7530724D56002F03ED /* MailCorrectorExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8971EA7F30724D56002F03ED /* Exceptions for "MailCorrectorExtension" folder in "MailCorrectorExtension" target */,
+			);
+			path = MailCorrectorExtension;
+			sourceTree = "<group>";
+		};
 		8976D0F93072425200995266 /* MailCorrector */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = MailCorrector;
@@ -19,6 +70,11 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8971EA7130724D56002F03ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
 		8976D0F43072425200995266 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
@@ -27,11 +83,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8971EA8330724DC2002F03ED /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				8971EA8430724DC2002F03ED /* KeychainStore.swift */,
+				8971EA8530724DD7002F03ED /* OpenAIClient.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		8976D0EE3072425200995266 = {
 			isa = PBXGroup;
 			children = (
 				8976D0F93072425200995266 /* MailCorrector */,
+				8971EA7530724D56002F03ED /* MailCorrectorExtension */,
 				8976D0F83072425200995266 /* Products */,
+				8971EA8330724DC2002F03ED /* Shared */,
 			);
 			sourceTree = "<group>";
 		};
@@ -39,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				8976D0F73072425200995266 /* MailCorrector.app */,
+				8971EA7430724D56002F03ED /* MailCorrectorExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -46,6 +114,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8971EA7330724D56002F03ED /* MailCorrectorExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8971EA8030724D56002F03ED /* Build configuration list for PBXNativeTarget "MailCorrectorExtension" */;
+			buildPhases = (
+				8971EA7030724D56002F03ED /* Sources */,
+				8971EA7130724D56002F03ED /* Frameworks */,
+				8971EA7230724D56002F03ED /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				8971EA7530724D56002F03ED /* MailCorrectorExtension */,
+			);
+			name = MailCorrectorExtension;
+			productName = MailCorrectorExtension;
+			productReference = 8971EA7430724D56002F03ED /* MailCorrectorExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		8976D0F63072425200995266 /* MailCorrector */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8976D1023072425300995266 /* Build configuration list for PBXNativeTarget "MailCorrector" */;
@@ -53,8 +139,12 @@
 				8976D0F33072425200995266 /* Sources */,
 				8976D0F43072425200995266 /* Frameworks */,
 				8976D0F53072425200995266 /* Resources */,
+				8971EA7C30724D56002F03ED /* Embed Foundation Extensions */,
 			);
 			buildRules = (
+			);
+			dependencies = (
+				8971EA7A30724D56002F03ED /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				8976D0F93072425200995266 /* MailCorrector */,
@@ -74,6 +164,9 @@
 				LastSwiftUpdateCheck = 2700;
 				LastUpgradeCheck = 2700;
 				TargetAttributes = {
+					8971EA7330724D56002F03ED = {
+						CreatedOnToolsVersion = 27.0;
+					};
 					8976D0F63072425200995266 = {
 						CreatedOnToolsVersion = 27.0;
 					};
@@ -94,11 +187,17 @@
 			projectRoot = "";
 			targets = (
 				8976D0F63072425200995266 /* MailCorrector */,
+				8971EA7330724D56002F03ED /* MailCorrectorExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8971EA7230724D56002F03ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
 		8976D0F53072425200995266 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
@@ -107,14 +206,131 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8971EA7030724D56002F03ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+				8971EA9030724F0E002F03ED /* KeychainStore.swift in Sources */,
+				8971EA9130724F0E002F03ED /* OpenAIClient.swift in Sources */,
+			);
+		};
 		8976D0F33072425200995266 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
+				8971EA8E30724F0E002F03ED /* OpenAIClient.swift in Sources */,
+				8971EA8F30724F0E002F03ED /* KeychainStore.swift in Sources */,
 			);
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		8971EA7A30724D56002F03ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8971EA7330724D56002F03ED /* MailCorrectorExtension */;
+			targetProxy = 8971EA7930724D56002F03ED /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		8971EA7D30724D56002F03ED /* Debug configuration for PBXNativeTarget "MailCorrectorExtension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MailCorrectorExtension/MailCorrectorExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MailCorrectorExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MailCorrectorExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.myself.MailCorrector.MailCorrectorExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+				XROS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Debug;
+		};
+		8971EA7E30724D56002F03ED /* Release configuration for PBXNativeTarget "MailCorrectorExtension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MailCorrectorExtension/MailCorrectorExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MailCorrectorExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MailCorrectorExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.myself.MailCorrector.MailCorrectorExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+				XROS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Release;
+		};
 		8976D1003072425300995266 /* Debug configuration for PBXProject "MailCorrector" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -150,7 +366,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = NK8L79967F;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -214,7 +430,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = NK8L79967F;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -240,13 +456,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MailCorrector/MailCorrector.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = NK8L79967F;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -272,13 +499,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MailCorrector/MailCorrector.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = NK8L79967F;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -302,6 +540,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8971EA8030724D56002F03ED /* Build configuration list for PBXNativeTarget "MailCorrectorExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8971EA7D30724D56002F03ED /* Debug configuration for PBXNativeTarget "MailCorrectorExtension" */,
+				8971EA7E30724D56002F03ED /* Release configuration for PBXNativeTarget "MailCorrectorExtension" */,
+			);
+			defaultConfigurationName = Release;
+		};
 		8976D0F23072425200995266 /* Build configuration list for PBXProject "MailCorrector" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
