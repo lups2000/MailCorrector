@@ -11,115 +11,209 @@ import SwiftUI
 struct ContentView: View {
 
     @State private var apiKey: String = ""
-    @State private var statusMessage: String?
-    @State private var isError = false
-    @State private var hasExistingKey = false
+    @State private var revealKey = false
+    @State private var status: SaveStatus = .none
+    @State private var hasSavedKey = false
+    @FocusState private var keyFieldFocused: Bool
 
     private let keychain = KeychainStore()
 
+    /// Transient status shown after a save/remove action.
+    private enum SaveStatus: Equatable {
+        case none
+        case saved
+        case removed
+        case error(String)
+    }
+
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                header
-                apiKeySection
-                instructionsSection
-            }
-            .padding(24)
-            .frame(maxWidth: 520, alignment: .leading)
+        Form {
+            headerSection
+            apiKeySection
+            instructionsSection
         }
-        .frame(minWidth: 480, minHeight: 460)
+        .formStyle(.grouped)
+        .frame(minWidth: 520, minHeight: 560)
         .onAppear(perform: loadExistingKey)
     }
 
-    // MARK: - Sections
+    // MARK: - Header
 
-    private var header: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Label("MailCorrector", systemImage: "text.badge.checkmark")
-                .font(.largeTitle.bold())
-            Text("AI proofreading for Apple Mail.")
-                .font(.title3)
-                .foregroundStyle(.secondary)
+    private var headerSection: some View {
+        Section {
+            HStack(spacing: 14) {
+                Image(systemName: "text.badge.checkmark")
+                    .font(.system(size: 30, weight: .semibold))
+                    .foregroundStyle(.tint)
+                    .frame(width: 52, height: 52)
+                    .background(.tint.opacity(0.12), in: RoundedRectangle(cornerRadius: 12))
+
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("MailCorrector")
+                        .font(.title2.bold())
+                    Text("AI proofreading for Apple Mail")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+            }
+            .padding(.vertical, 4)
         }
     }
 
+    // MARK: - API Key
+
     private var apiKeySection: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("OpenAI API Key")
-                .font(.headline)
+        Section {
+            // Full-width input field with reveal toggle. Wrapped so the grouped
+            // Form doesn't treat leading text as a trailing-aligned label.
+            VStack(alignment: .leading, spacing: 6) {
+                Text(hasSavedKey ? "Replace your key" : "Paste your key")
+                    .font(.subheadline.weight(.medium))
 
-            Text("Your key is stored securely in the macOS Keychain and shared with the Mail extension.")
-                .font(.callout)
-                .foregroundStyle(.secondary)
+                HStack(spacing: 8) {
+                    Group {
+                        if revealKey {
+                            TextField(placeholder, text: $apiKey)
+                        } else {
+                            SecureField(placeholder, text: $apiKey)
+                        }
+                    }
+                    .textFieldStyle(.roundedBorder)
+                    .font(.body.monospaced())
+                    .autocorrectionDisabled()
+                    .labelsHidden()
+                    .frame(maxWidth: .infinity)
+                    .focused($keyFieldFocused)
+                    .onSubmit(saveKey)
 
-            SecureField("sk-…", text: $apiKey)
-                .textFieldStyle(.roundedBorder)
+                    Button {
+                        revealKey.toggle()
+                    } label: {
+                        Image(systemName: revealKey ? "eye.slash" : "eye")
+                            .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
+                    .help(revealKey ? "Hide key" : "Show key")
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, 2)
 
+            // Actions + status.
             HStack(spacing: 12) {
                 Button("Save", action: saveKey)
                     .buttonStyle(.borderedProminent)
-                    .disabled(apiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    .disabled(!isKeyValid)
 
-                if hasExistingKey {
+                if hasSavedKey {
                     Button("Remove", role: .destructive, action: removeKey)
                         .buttonStyle(.bordered)
                 }
 
-                if let statusMessage {
-                    Label(statusMessage, systemImage: isError ? "exclamationmark.triangle" : "checkmark.circle")
-                        .font(.callout)
-                        .foregroundStyle(isError ? .red : .green)
-                }
+                Spacer()
+
+                statusView
             }
+        } header: {
+            Text("OpenAI API Key")
+        } footer: {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Stored securely in your macOS Keychain and shared only with the Mail extension. It never leaves your Mac except in requests to OpenAI.")
+                Link("Get an API key at platform.openai.com",
+                     destination: URL(string: "https://platform.openai.com/api-keys")!)
+                    .font(.footnote)
+            }
+            .font(.footnote)
+            .foregroundStyle(.secondary)
         }
     }
+
+    @ViewBuilder
+    private var statusView: some View {
+        switch status {
+        case .none:
+            if hasSavedKey {
+                Label("Key saved", systemImage: "checkmark.seal.fill")
+                    .foregroundStyle(.green)
+                    .font(.callout)
+            }
+        case .saved:
+            Label("Saved", systemImage: "checkmark.circle.fill")
+                .foregroundStyle(.green)
+                .font(.callout)
+        case .removed:
+            Label("Removed", systemImage: "trash")
+                .foregroundStyle(.secondary)
+                .font(.callout)
+        case .error(let message):
+            Label(message, systemImage: "exclamationmark.triangle.fill")
+                .foregroundStyle(.red)
+                .font(.callout)
+                .lineLimit(2)
+        }
+    }
+
+    // MARK: - Instructions
 
     private var instructionsSection: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("How to enable")
-                .font(.headline)
-
-            VStack(alignment: .leading, spacing: 8) {
-                instructionRow(number: 1, text: "Open Mail ▸ Settings ▸ Extensions.")
-                instructionRow(number: 2, text: "Enable “MailCorrector”.")
-                instructionRow(number: 3, text: "Restart Mail and open a compose window.")
-                instructionRow(number: 4, text: "Click the MailCorrector icon in the compose toolbar to proofread.")
-            }
-            .padding(12)
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.secondary.opacity(0.08))
-            )
+        Section {
+            instructionRow(1, "Open Mail ▸ Settings ▸ Extensions.")
+            instructionRow(2, "Turn on \u{201C}MailCorrector\u{201D}.")
+            instructionRow(3, "Restart Mail, then open a compose window.")
+            instructionRow(4, "Select your draft, press \u{2318}C, then click the MailCorrector button to proofread.")
+        } header: {
+            Text("Enable in Mail")
         }
     }
 
-    private func instructionRow(number: Int, text: String) -> some View {
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
-            Text("\(number).")
-                .font(.callout.monospacedDigit().weight(.semibold))
-                .foregroundStyle(.secondary)
+    private func instructionRow(_ number: Int, _ text: String) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 12) {
+            Text("\(number)")
+                .font(.footnote.weight(.bold))
+                .foregroundStyle(.white)
+                .frame(width: 20, height: 20)
+                .background(.tint, in: Circle())
             Text(text)
-                .font(.callout)
             Spacer(minLength: 0)
         }
+        .padding(.vertical, 2)
+    }
+
+    // MARK: - Validation
+
+    /// A light sanity check: non-empty and looks like an OpenAI key.
+    private var isKeyValid: Bool {
+        let trimmed = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.hasPrefix("sk-") && trimmed.count >= 20
+    }
+
+    /// Placeholder text for the key field, reflecting whether a key is stored.
+    private var placeholder: String {
+        hasSavedKey ? "Enter a new key to replace the saved one" : "sk-proj-…"
     }
 
     // MARK: - Actions
 
     private func loadExistingKey() {
+        // Detect whether a key is stored, but do not display it. The field
+        // stays empty (placeholder visible) so the user can see it clearly and
+        // the stored secret is never shown in plain text.
         if let key = try? keychain.read(), !key.isEmpty {
-            apiKey = key
-            hasExistingKey = true
+            hasSavedKey = true
         }
     }
 
     private func saveKey() {
         do {
             try keychain.save(apiKey)
-            hasExistingKey = true
-            show(message: "Saved.", isError: false)
+            hasSavedKey = true
+            status = .saved
+            apiKey = ""           // Clear the field; the key lives in Keychain now.
+            revealKey = false
+            keyFieldFocused = false
         } catch {
-            show(message: error.localizedDescription, isError: true)
+            status = .error(error.localizedDescription)
         }
     }
 
@@ -127,16 +221,13 @@ struct ContentView: View {
         do {
             try keychain.delete()
             apiKey = ""
-            hasExistingKey = false
-            show(message: "Removed.", isError: false)
+            hasSavedKey = false
+            status = .removed
+            revealKey = false
+            keyFieldFocused = false
         } catch {
-            show(message: error.localizedDescription, isError: true)
+            status = .error(error.localizedDescription)
         }
-    }
-
-    private func show(message: String, isError: Bool) {
-        self.statusMessage = message
-        self.isError = isError
     }
 }
 
