@@ -139,10 +139,10 @@ struct ReviewView: View {
             Button {
                 Task { await model.proofread() }
             } label: {
-                Text("Proofread copied text")
-                    .frame(maxWidth: .infinity)
+                Label("Proofread", systemImage: "sparkles")
             }
             .buttonStyle(.borderedProminent)
+            .controlSize(.large)
             .disabled(!model.hasText)
 
             if !model.hasText {
@@ -223,3 +223,8 @@ struct ReviewView: View {
         }
     }
 }
+#Preview("Idle") {
+    ReviewView(model: ReviewViewModel(originalText: "Hi johnn, i hope your doing good."))
+        .frame(width: 360, height: 420)
+}
+
