@@ -1,0 +1,20 @@
+// Developer.xcconfig.example
+//
+// Per-developer build settings. Do NOT commit real values.
+//
+// SETUP:
+//   1. Copy this file to "Developer.xcconfig" (same folder).
+//   2. Fill in your Apple Development Team ID and a bundle identifier prefix.
+//   3. Build. "Developer.xcconfig" is gitignored, so your values stay local.
+//
+// Find your Team ID in Xcode > Settings > Accounts, or at
+// https://developer.apple.com/account (Membership details).
+
+// Your 10-character Apple Developer Team ID, e.g. ABCDE12345.
+// Leave empty to build without a team (then pick one in Signing & Capabilities).
+DEVELOPMENT_TEAM =
+
+// Reverse-DNS prefix for the app and extension bundle identifiers.
+// The app becomes <prefix>.MailCorrector and the extension
+// <prefix>.MailCorrector.MailCorrectorExtension.
+BUNDLE_ID_PREFIX = com.example

@@ -1,0 +1,14 @@
+// Base.xcconfig
+//
+// Shared build settings for all targets. This file IS committed.
+// It pulls per-developer values from Developer.xcconfig (gitignored).
+
+#include? "Developer.xcconfig"
+
+// Fallback prefix if Developer.xcconfig is missing or doesn't set one.
+// A real signed build still needs a valid DEVELOPMENT_TEAM.
+BUNDLE_ID_PREFIX = $(BUNDLE_ID_PREFIX:default=com.example)
+
+// Derived bundle identifiers.
+APP_BUNDLE_ID = $(BUNDLE_ID_PREFIX).MailCorrector
+EXTENSION_BUNDLE_ID = $(BUNDLE_ID_PREFIX).MailCorrector.MailCorrectorExtension

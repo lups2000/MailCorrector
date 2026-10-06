@@ -41,6 +41,9 @@
 		8971EA8430724DC2002F03ED /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		8971EA8530724DD7002F03ED /* OpenAIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIClient.swift; sourceTree = "<group>"; };
 		8976D0F73072425200995266 /* MailCorrector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MailCorrector.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		89D9455E30752F9D00586C4E /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		89D9455F30752F9D00586C4E /* Developer.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Developer.xcconfig; sourceTree = "<group>"; };
+		89D9456030752F9D00586C4E /* Developer.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text; path = Developer.xcconfig.example; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -95,6 +98,7 @@
 		8976D0EE3072425200995266 = {
 			isa = PBXGroup;
 			children = (
+				89D9456130752F9D00586C4E /* Config */,
 				8976D0F93072425200995266 /* MailCorrector */,
 				8971EA7530724D56002F03ED /* MailCorrectorExtension */,
 				8976D0F83072425200995266 /* Products */,
@@ -109,6 +113,16 @@
 				8971EA7430724D56002F03ED /* MailCorrectorExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		89D9456130752F9D00586C4E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				89D9455E30752F9D00586C4E /* Base.xcconfig */,
+				89D9455F30752F9D00586C4E /* Developer.xcconfig */,
+				89D9456030752F9D00586C4E /* Developer.xcconfig.example */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,11 +247,12 @@
 /* Begin XCBuildConfiguration section */
 		8971EA7D30724D56002F03ED /* Debug configuration for PBXNativeTarget "MailCorrectorExtension" */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89D9455E30752F9D00586C4E /* Base.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = MailCorrectorExtension/MailCorrectorExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -266,7 +281,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.myself.MailCorrector.MailCorrectorExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(EXTENSION_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
@@ -283,11 +298,12 @@
 		};
 		8971EA7E30724D56002F03ED /* Release configuration for PBXNativeTarget "MailCorrectorExtension" */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89D9455E30752F9D00586C4E /* Base.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = MailCorrectorExtension/MailCorrectorExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -316,7 +332,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 27.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.myself.MailCorrector.MailCorrectorExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(EXTENSION_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
@@ -333,6 +349,7 @@
 		};
 		8976D1003072425300995266 /* Debug configuration for PBXProject "MailCorrector" */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89D9455E30752F9D00586C4E /* Base.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -389,6 +406,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -397,6 +415,7 @@
 		};
 		8976D1013072425300995266 /* Release configuration for PBXProject "MailCorrector" */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89D9455E30752F9D00586C4E /* Base.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -446,6 +465,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 27.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
@@ -453,6 +473,7 @@
 		};
 		8976D1033072425300995266 /* Debug configuration for PBXNativeTarget "MailCorrector" */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89D9455E30752F9D00586C4E /* Base.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -460,7 +481,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
@@ -482,7 +503,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.myself.MailCorrector;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -496,6 +517,7 @@
 		};
 		8976D1043072425300995266 /* Release configuration for PBXNativeTarget "MailCorrector" */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89D9455E30752F9D00586C4E /* Base.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -503,7 +525,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
@@ -525,7 +547,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.myself.MailCorrector;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

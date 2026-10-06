@@ -25,6 +25,7 @@ Package.resolved
 Pods/
 Carthage/Build/
 
-# Secrets — never commit API keys or local config
+# Secrets & per-developer config — never commit
 *.env
 Secrets.xcconfig
+Config/Developer.xcconfig
