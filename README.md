@@ -57,7 +57,7 @@ it's the only reliable way a Mail extension can work with your draft on current 
 
 ## Requirements
 
-- macOS 27 or later
+- macOS 26 or later
 - An [OpenAI API key](https://platform.openai.com/api-keys)
 - Xcode 16 or later (to build from source)
 - An Apple ID (a free account is enough to build and run locally)
@@ -131,7 +131,7 @@ selected under *Signing & Capabilities*, and build & run the **MailCorrector** s
 
 - **Copy/paste required.** MailKit doesn't expose the live draft to the extension, so you
   copy your text in and paste the result back (see *How it works*).
-- **macOS only.** This targets Apple Mail on macOS 27 and later.
+- **macOS only.** This targets Apple Mail on macOS 26 and later.
 - **Distribution needs signing.** Running the extension on another Mac requires the app to
   be signed and notarized (a paid Apple Developer Program membership). Building from source
   with a free Apple ID works for personal use.
