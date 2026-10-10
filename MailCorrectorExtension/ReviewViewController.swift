@@ -25,10 +25,10 @@ final class ReviewViewController: MEExtensionViewController {
         // MailKit does not expose the live draft body to a compose extension,
         // so the proofreader reads the text the user copied to the clipboard.
         let clipboardText = NSPasteboard.general.string(forType: .string) ?? ""
-        let model = ReviewViewModel(originalText: clipboardText)
+        let model = ReviewViewModel(inputText: clipboardText)
         let hosting = NSHostingController(rootView: ReviewView(model: model))
         // A compact popover size suitable for the compose window.
-        hosting.view.frame = NSRect(x: 0, y: 0, width: 380, height: 540)
+        hosting.view.frame = NSRect(x: 0, y: 0, width: 380, height: 620)
         view = hosting.view
     }
 }

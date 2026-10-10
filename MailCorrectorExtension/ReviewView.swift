@@ -31,7 +31,8 @@ final class ReviewViewModel {
     /// The custom free-form instruction entered by the user.
     var customInstruction: String = ""
 
-    let originalText: String
+    /// The editable text to transform, seeded from the clipboard.
+    var inputText: String
 
     private let keychain: KeychainStore
     private let client: OpenAIClient
@@ -46,23 +47,28 @@ final class ReviewViewModel {
     }
 
     init(
-        originalText: String,
+        inputText: String,
         keychain: KeychainStore = KeychainStore(),
         client: OpenAIClient = OpenAIClient()
     ) {
-        self.originalText = originalText
+        self.inputText = inputText
         self.keychain = keychain
         self.client = client
     }
 
     /// Whether there is any text to work with.
     var hasText: Bool {
-        !originalText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        !inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     /// Whether a custom instruction has been entered.
     var hasCustomInstruction: Bool {
         !customInstruction.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    /// Replaces the input text with the current clipboard contents.
+    func loadFromClipboard() {
+        inputText = NSPasteboard.general.string(forType: .string) ?? ""
     }
 
     // MARK: - Running transformations
@@ -99,11 +105,11 @@ final class ReviewViewModel {
             let result: String
             switch request {
             case .action(let action):
-                result = try await client.transform(originalText, action: action, apiKey: key)
+                result = try await client.transform(inputText, action: action, apiKey: key)
             case .custom(let instruction):
-                result = try await client.transform(originalText, customInstruction: instruction, apiKey: key)
+                result = try await client.transform(inputText, customInstruction: instruction, apiKey: key)
             case .translate(let language):
-                result = try await client.transform(originalText, language: language, apiKey: key)
+                result = try await client.transform(inputText, language: language, apiKey: key)
             }
             phase = .result(text: result)
         } catch {
@@ -175,19 +181,51 @@ struct ReviewView: View {
 
     private var idleView: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Label("Copy your draft (⌘A, ⌘C), then choose an action.",
-                  systemImage: "doc.on.clipboard")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+            inputSection
+            actionButtons
+            customSection
+        }
+    }
 
-            if model.hasText {
-                actionButtons
-                customSection
-            } else {
-                Text("Clipboard is empty. Copy your draft text first, then reopen this panel.")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
+    private var inputSection: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Label("Text to improve", systemImage: "doc.plaintext")
+                    .font(.subheadline.weight(.semibold))
+                Spacer()
+                Button {
+                    model.loadFromClipboard()
+                } label: {
+                    Label("Paste", systemImage: "arrow.down.doc")
+                        .font(.caption)
+                }
+                .buttonStyle(.borderless)
+                .help("Replace with the current clipboard contents")
             }
+
+            TextEditor(text: $model.inputText)
+                .font(.callout)
+                .frame(height: 90)
+                .padding(6)
+                .scrollContentBackground(.hidden)
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(.quaternary.opacity(0.5))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .strokeBorder(.quaternary, lineWidth: 1)
+                )
+                .overlay(alignment: .topLeading) {
+                    if !model.hasText {
+                        Text("Copy your draft (⌘A, ⌘C) and tap Paste, or type here.")
+                            .font(.callout)
+                            .foregroundStyle(.tertiary)
+                            .padding(.horizontal, 11)
+                            .padding(.vertical, 14)
+                            .allowsHitTesting(false)
+                    }
+                }
         }
     }
 
@@ -226,6 +264,7 @@ struct ReviewView: View {
                 languagePicker
             }
         }
+        .disabled(!model.hasText)
     }
 
     private var languagePicker: some View {
@@ -284,10 +323,10 @@ struct ReviewView: View {
                 } label: {
                     Image(systemName: "arrow.up.circle.fill")
                         .font(.title2)
-                        .foregroundStyle(model.hasCustomInstruction ? Color.accentColor : Color.secondary)
+                        .foregroundStyle(model.hasCustomInstruction && model.hasText ? Color.accentColor : Color.secondary)
                 }
                 .buttonStyle(.plain)
-                .disabled(!model.hasCustomInstruction)
+                .disabled(!model.hasCustomInstruction || !model.hasText)
                 .help("Apply custom instruction")
             }
             .padding(.horizontal, 10)
@@ -320,7 +359,7 @@ struct ReviewView: View {
 
     private func resultView(text: String) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            labeledBox(title: "ORIGINAL", text: model.originalText, prominent: false)
+            labeledBox(title: "ORIGINAL", text: model.inputText, prominent: false)
             labeledBox(title: "RESULT", text: text, prominent: true)
 
             Button {
@@ -380,6 +419,6 @@ struct ReviewView: View {
 }
 
 #Preview("Idle") {
-    ReviewView(model: ReviewViewModel(originalText: "Hi johnn, i hope your doing good."))
+    ReviewView(model: ReviewViewModel(inputText: "Hi johnn, i hope your doing good."))
         .frame(width: 360, height: 460)
 }
