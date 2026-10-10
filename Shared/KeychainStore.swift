@@ -53,10 +53,24 @@ struct KeychainStore {
         accessGroup: "com.myself.MailCorrector.shared"
     )
 
+    /// Configuration for a specific provider's API key (one item per provider).
+    static func configuration(for provider: Provider) -> Configuration {
+        Configuration(
+            service: "com.myself.MailCorrector.apikey",
+            account: provider.rawValue,
+            accessGroup: "com.myself.MailCorrector.shared"
+        )
+    }
+
     let configuration: Configuration
 
     init(configuration: Configuration = KeychainStore.openAIKey) {
         self.configuration = configuration
+    }
+
+    /// Convenience: a store for a specific provider's key.
+    init(provider: Provider) {
+        self.configuration = KeychainStore.configuration(for: provider)
     }
 
     // MARK: - Public API

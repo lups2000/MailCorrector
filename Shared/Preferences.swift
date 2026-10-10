@@ -15,7 +15,8 @@ struct Preferences {
     static let appGroupID = "group.com.myself.MailCorrector"
 
     private enum Keys {
-        static let model = "selectedModel"
+        static let provider = "selectedProvider"
+        static func model(for provider: Provider) -> String { "selectedModel.\(provider.rawValue)" }
     }
 
     private let defaults: UserDefaults
@@ -26,17 +27,31 @@ struct Preferences {
         defaults = UserDefaults(suiteName: Preferences.appGroupID) ?? .standard
     }
 
-    /// The user's selected AI model.
-    var model: AIModel {
+    /// The user's selected provider.
+    var provider: Provider {
         get {
-            guard let raw = defaults.string(forKey: Keys.model),
-                  let model = AIModel(rawValue: raw) else {
+            guard let raw = defaults.string(forKey: Keys.provider),
+                  let provider = Provider(rawValue: raw) else {
                 return .default
             }
-            return model
+            return provider
         }
         nonmutating set {
-            defaults.set(newValue.rawValue, forKey: Keys.model)
+            defaults.set(newValue.rawValue, forKey: Keys.provider)
         }
+    }
+
+    /// The selected model ID for a given provider (falls back to its default).
+    func modelID(for provider: Provider) -> String {
+        if let stored = defaults.string(forKey: Keys.model(for: provider)),
+           provider.models.contains(where: { $0.id == stored }) {
+            return stored
+        }
+        return provider.defaultModel.id
+    }
+
+    /// Sets the selected model ID for a given provider.
+    nonmutating func setModelID(_ id: String, for provider: Provider) {
+        defaults.set(id, forKey: Keys.model(for: provider))
     }
 }

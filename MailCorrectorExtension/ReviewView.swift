@@ -34,8 +34,7 @@ final class ReviewViewModel {
     /// The editable text to transform, seeded from the clipboard.
     var inputText: String
 
-    private let keychain: KeychainStore
-    private let client: OpenAIClient
+    private let preferences = Preferences()
 
     /// Remembers the last-run request so "Redo" can repeat it.
     private var lastRequest: Request?
@@ -46,14 +45,8 @@ final class ReviewViewModel {
         case translate(Language)
     }
 
-    init(
-        inputText: String,
-        keychain: KeychainStore = KeychainStore(),
-        client: OpenAIClient = OpenAIClient()
-    ) {
+    init(inputText: String) {
         self.inputText = inputText
-        self.keychain = keychain
-        self.client = client
     }
 
     /// Whether there is any text to work with.
@@ -64,6 +57,11 @@ final class ReviewViewModel {
     /// Whether a custom instruction has been entered.
     var hasCustomInstruction: Bool {
         !customInstruction.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    /// The display name of the currently selected provider.
+    var providerName: String {
+        preferences.provider.title
     }
 
     /// Replaces the input text with the current clipboard contents.
@@ -98,10 +96,15 @@ final class ReviewViewModel {
         lastRequest = request
         phase = .loading
         do {
+            // Resolve the selected provider, its model, and its API key.
+            let provider = preferences.provider
+            let model = preferences.modelID(for: provider)
+            let keychain = KeychainStore(provider: provider)
             guard let key = try keychain.read(), !key.isEmpty else {
-                phase = .failure(message: OpenAIClientError.missingAPIKey.localizedDescription)
+                phase = .failure(message: "No API key found for \(provider.title). Open MailCorrector and add it.")
                 return
             }
+            let client = AIClient(provider: provider, model: model)
             let result: String
             switch request {
             case .action(let action):
@@ -347,7 +350,7 @@ struct ReviewView: View {
     private var loadingView: some View {
         VStack(spacing: 12) {
             ProgressView()
-            Text("Contacting OpenAI…")
+            Text("Contacting \(model.providerName)…")
                 .font(.callout)
                 .foregroundStyle(.secondary)
         }
