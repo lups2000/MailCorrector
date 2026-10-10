@@ -1,5 +1,5 @@
 //
-//  OpenAIClient.swift
+//  AIClient.swift
 //  MailCorrector
 //
 //  A provider-agnostic chat client. It builds the correct request and parses

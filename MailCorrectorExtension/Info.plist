@@ -16,6 +16,8 @@
 			</array>
 			<key>MEComposeSession</key>
 			<dict>
+				<key>MEComposeIcon</key>
+				<string>ComposeIcon</string>
 				<key>MEComposeIconToolTip</key>
 				<string>Proofread with MailCorrector</string>
 			</dict>
