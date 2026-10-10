@@ -28,7 +28,7 @@ final class ReviewViewController: MEExtensionViewController {
         let model = ReviewViewModel(originalText: clipboardText)
         let hosting = NSHostingController(rootView: ReviewView(model: model))
         // A compact popover size suitable for the compose window.
-        hosting.view.frame = NSRect(x: 0, y: 0, width: 360, height: 420)
+        hosting.view.frame = NSRect(x: 0, y: 0, width: 380, height: 540)
         view = hosting.view
     }
 }

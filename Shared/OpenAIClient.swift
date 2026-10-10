@@ -50,24 +50,37 @@ struct OpenAIClient {
         self.session = session
     }
 
-    /// The system prompt that defines the proofreading behavior.
-    private var systemPrompt: String {
-        """
-        You are a proofreading assistant for email. Correct grammar, spelling, \
-        punctuation, and awkward phrasing. Preserve the original meaning, tone, \
-        register, and language of the text exactly. Do not translate. Do not add \
-        greetings, sign-offs, commentary, or explanations. Return only the \
-        corrected text, with no surrounding quotation marks.
-        """
-    }
-
-    /// Proofreads the given draft text and returns the corrected version.
+    /// Transforms the given email text using an action's prompt and temperature.
     ///
     /// - Parameters:
-    ///   - text: The draft body to proofread.
+    ///   - text: The email text to transform.
+    ///   - action: The transformation to apply.
     ///   - apiKey: The OpenAI API key.
-    /// - Returns: The corrected text.
+    /// - Returns: The transformed text.
+    func transform(_ text: String, action: TextAction, apiKey: String) async throws -> String {
+        try await run(text, systemPrompt: action.systemPrompt, temperature: action.temperature, apiKey: apiKey)
+    }
+
+    /// Transforms the given email text using a free-form custom instruction.
+    func transform(_ text: String, customInstruction: String, apiKey: String) async throws -> String {
+        try await run(text,
+                      systemPrompt: CustomInstruction.systemPrompt(customInstruction),
+                      temperature: 0.4,
+                      apiKey: apiKey)
+    }
+
+    /// Translates the given email text into the target language.
+    func transform(_ text: String, language: Language, apiKey: String) async throws -> String {
+        try await run(text, systemPrompt: language.systemPrompt, temperature: 0.3, apiKey: apiKey)
+    }
+
+    /// Proofreads the given draft text (kept for convenience).
     func proofread(_ text: String, apiKey: String) async throws -> String {
+        try await transform(text, action: .proofread, apiKey: apiKey)
+    }
+
+    /// Core request runner shared by all transformations.
+    private func run(_ text: String, systemPrompt: String, temperature: Double, apiKey: String) async throws -> String {
         let trimmedInput = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedInput.isEmpty else { throw OpenAIClientError.emptyInput }
 
@@ -82,7 +95,7 @@ struct OpenAIClient {
 
         let payload = ChatRequest(
             model: model,
-            temperature: 0.2,
+            temperature: temperature,
             messages: [
                 .init(role: "system", content: systemPrompt),
                 .init(role: "user", content: trimmedInput)
