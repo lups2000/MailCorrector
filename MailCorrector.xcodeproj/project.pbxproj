@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		890C5788307A202F0027FF16 /* TextAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890C5787307A202F0027FF16 /* TextAction.swift */; };
 		890C5789307A202F0027FF16 /* TextAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890C5787307A202F0027FF16 /* TextAction.swift */; };
+		890C578B307A2E960027FF16 /* ModelTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890C578A307A2E960027FF16 /* ModelTier.swift */; };
+		890C578C307A2E960027FF16 /* ModelTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890C578A307A2E960027FF16 /* ModelTier.swift */; };
+		890C578E307A2EA70027FF16 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890C578D307A2EA70027FF16 /* Preferences.swift */; };
+		890C578F307A2EA70027FF16 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890C578D307A2EA70027FF16 /* Preferences.swift */; };
 		8971EA7B30724D56002F03ED /* MailCorrectorExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8971EA7430724D56002F03ED /* MailCorrectorExtension.appex */; };
 		8971EA8E30724F0E002F03ED /* OpenAIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8971EA8530724DD7002F03ED /* OpenAIClient.swift */; };
 		8971EA8F30724F0E002F03ED /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8971EA8430724DC2002F03ED /* KeychainStore.swift */; };
@@ -40,6 +44,8 @@
 
 /* Begin PBXFileReference section */
 		890C5787307A202F0027FF16 /* TextAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAction.swift; sourceTree = "<group>"; };
+		890C578A307A2E960027FF16 /* ModelTier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTier.swift; sourceTree = "<group>"; };
+		890C578D307A2EA70027FF16 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		8971EA7430724D56002F03ED /* MailCorrectorExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MailCorrectorExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8971EA8430724DC2002F03ED /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		8971EA8530724DD7002F03ED /* OpenAIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIClient.swift; sourceTree = "<group>"; };
@@ -95,6 +101,8 @@
 				8971EA8430724DC2002F03ED /* KeychainStore.swift */,
 				8971EA8530724DD7002F03ED /* OpenAIClient.swift */,
 				890C5787307A202F0027FF16 /* TextAction.swift */,
+				890C578A307A2E960027FF16 /* ModelTier.swift */,
+				890C578D307A2EA70027FF16 /* Preferences.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -230,12 +238,16 @@
 				8971EA9030724F0E002F03ED /* KeychainStore.swift in Sources */,
 				890C5789307A202F0027FF16 /* TextAction.swift in Sources */,
 				8971EA9130724F0E002F03ED /* OpenAIClient.swift in Sources */,
+				890C578B307A2E960027FF16 /* ModelTier.swift in Sources */,
+				890C578F307A2EA70027FF16 /* Preferences.swift in Sources */,
 			);
 		};
 		8976D0F33072425200995266 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
 				890C5788307A202F0027FF16 /* TextAction.swift in Sources */,
+				890C578E307A2EA70027FF16 /* Preferences.swift in Sources */,
+				890C578C307A2E960027FF16 /* ModelTier.swift in Sources */,
 				8971EA8E30724F0E002F03ED /* OpenAIClient.swift in Sources */,
 				8971EA8F30724F0E002F03ED /* KeychainStore.swift in Sources */,
 			);
@@ -289,6 +301,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(EXTENSION_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -340,6 +353,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(EXTENSION_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

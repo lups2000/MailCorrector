@@ -45,8 +45,8 @@ struct OpenAIClient {
     /// The URL session used for requests.
     private let session: URLSession
 
-    init(model: String = "gpt-4o-mini", session: URLSession = .shared) {
-        self.model = model
+    init(model: String? = nil, session: URLSession = .shared) {
+        self.model = model ?? Preferences().model.modelID
         self.session = session
     }
 

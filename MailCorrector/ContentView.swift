@@ -14,9 +14,11 @@ struct ContentView: View {
     @State private var revealKey = false
     @State private var status: SaveStatus = .none
     @State private var hasSavedKey = false
+    @State private var selectedModel: AIModel = Preferences().model
     @FocusState private var keyFieldFocused: Bool
 
     private let keychain = KeychainStore()
+    private let preferences = Preferences()
 
     /// Transient status shown after a save/remove action.
     private enum SaveStatus: Equatable {
@@ -30,10 +32,11 @@ struct ContentView: View {
         Form {
             headerSection
             apiKeySection
+            modelSection
             instructionsSection
         }
         .formStyle(.grouped)
-        .frame(minWidth: 520, minHeight: 560)
+        .frame(minWidth: 520, minHeight: 620)
         .onAppear(perform: loadExistingKey)
     }
 
@@ -151,6 +154,30 @@ struct ContentView: View {
                 .foregroundStyle(.red)
                 .font(.callout)
                 .lineLimit(2)
+        }
+    }
+
+    // MARK: - Model
+
+    private var modelSection: some View {
+        Section {
+            Picker(selection: $selectedModel) {
+                ForEach(AIModel.allCases) { model in
+                    Text("\(model.title)  —  \(model.hint)")
+                        .tag(model)
+                }
+            } label: {
+                Label("Model", systemImage: "cpu")
+            }
+            .onChange(of: selectedModel) { _, newValue in
+                preferences.model = newValue
+            }
+        } header: {
+            Text("AI Model")
+        } footer: {
+            Text("Models are listed from cheapest to highest quality. Higher-quality models produce better results but cost more per request.")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
         }
     }
 
