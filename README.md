@@ -1,21 +1,35 @@
 # MailCorrector
 
-**AI proofreading for Apple Mail.** A native macOS Mail extension that polishes your
-email drafts with OpenAI — fixing grammar, spelling, punctuation, and awkward phrasing
-while preserving your original meaning, tone, and language.
+**AI writing assistant for Apple Mail.** A native macOS Mail extension that proofreads and
+rewrites your email text with the AI provider and model of your choice — fixing grammar,
+changing tone, adjusting length, translating, or applying your own custom instruction.
 
-Bring your own OpenAI API key. No accounts, no servers, no tracking — your key is stored
-in the macOS Keychain and requests go directly to OpenAI.
+Bring your own API key. No accounts, no servers, no tracking — your key is stored in the
+macOS Keychain and requests go directly to the provider you choose.
 
 ---
 
 ## What it does
 
-- Proofreads email text with OpenAI's `gpt-4o-mini` model.
-- Corrects **grammar, spelling, punctuation, and clumsy phrasing**.
-- **Preserves meaning, tone, register, and language** — it won't translate or rewrite your voice.
-- Shows you the **original and corrected text side by side** so you review before applying.
-- Stores your API key **securely in the macOS Keychain**, shared only with the extension.
+Give it some email text and pick an action:
+
+- **Proofread** — fix grammar, spelling, punctuation, and awkward phrasing while keeping
+  your meaning, tone, and language.
+- **Rewrite the tone** — Professional, Friendly, or Casual.
+- **Change the length** — make it more Concise or Expand it.
+- **Translate** into one of several languages.
+- **Describe a change** — type any custom instruction (e.g. "make it more apologetic").
+
+Other highlights:
+
+- **Multiple AI providers** — OpenAI, Anthropic (Claude), Google Gemini, and OpenRouter,
+  each with a choice of models from cheapest to highest quality.
+- **See and edit the text first** — the panel shows the text it will transform (seeded from
+  your clipboard) so you can review or tweak it before sending.
+- **Review before applying** — shows the original and the result side by side, then you copy
+  the result back into your draft.
+- **Secure, local key storage** — each provider's API key is stored in the macOS Keychain,
+  shared only with the extension.
 
 ### Example
 
@@ -58,7 +72,10 @@ it's the only reliable way a Mail extension can work with your draft on current 
 ## Requirements
 
 - macOS 26 or later
-- An [OpenAI API key](https://platform.openai.com/api-keys)
+- An API key from a supported provider — [OpenAI](https://platform.openai.com/api-keys),
+  [Anthropic](https://console.anthropic.com/settings/keys),
+  [Google Gemini](https://aistudio.google.com/apikey), or
+  [OpenRouter](https://openrouter.ai/keys)
 - Xcode 16 or later (to build from source)
 - An Apple ID (a free account is enough to build and run locally)
 
@@ -66,11 +83,13 @@ it's the only reliable way a Mail extension can work with your draft on current 
 
 ## Setup
 
-### 1. Add your OpenAI API key
+### 1. Choose a provider and add your API key
 
 1. Build and run the **MailCorrector** app (see *Build from source* below).
-2. In the app window, paste your OpenAI API key and click **Save**.
-   - The key is stored in your macOS Keychain and never written to disk in plain text.
+2. Pick your **Provider** (OpenAI, Anthropic, Gemini, or OpenRouter) and a **Model**.
+3. Paste that provider's API key and click **Save**.
+   - Each provider's key is stored in your macOS Keychain and never written to disk in
+     plain text. You can save keys for several providers and switch between them anytime.
 
 ### 2. Enable the extension in Mail
 
@@ -85,9 +104,11 @@ it's the only reliable way a Mail extension can work with your draft on current 
 1. Write (or open) an email in Mail's compose window.
 2. Select your draft text and **copy it** (⌘A, then ⌘C).
 3. Click the **MailCorrector** button in the compose window toolbar.
-4. Click **Proofread**.
-5. Review the **Original** vs **Corrected** text in the panel.
-6. Click **Copy corrected text**, then paste (⌘V) back over your draft.
+4. Review (or edit) the text shown in the panel, then choose an action — **Proofread**,
+   a tone (**Professional / Friendly / Casual**), length (**Concise / Expand**),
+   **Translate**, or type your own instruction under **Describe a change**.
+5. Review the **Original** vs **Result** text in the panel.
+6. Click **Copy result**, then paste (⌘V) back over your draft.
 
 ---
 
@@ -122,7 +143,7 @@ selected under *Signing & Capabilities*, and build & run the **MailCorrector** s
 ## Privacy
 
 - Your API key is stored in the **macOS Keychain** — never on disk as plain text.
-- Email text is sent **directly to OpenAI** and nowhere else.
+- Email text is sent **directly to the AI provider you choose** and nowhere else.
 - No analytics, no telemetry, no data collection.
 
 ---
@@ -141,9 +162,9 @@ selected under *Signing & Capabilities*, and build & run the **MailCorrector** s
 ## Project structure
 
 ```
-MailCorrector/              Host app (API-key settings UI)
+MailCorrector/              Host app (provider, model, and API-key settings UI)
 MailCorrectorExtension/     The MailKit compose extension
-Shared/                     Shared code (OpenAI client, Keychain store)
+Shared/                     Shared code (AI client, providers, Keychain, preferences)
 Config/                     Build configuration (signing via xcconfig)
 ```
 
